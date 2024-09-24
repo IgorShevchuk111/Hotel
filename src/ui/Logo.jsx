@@ -1,18 +1,18 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const StyledLogo = styled.div`
   text-align: center;
 `;
 
-const Img = styled.img`
-  height: 9.6rem;
+const H1 = styled.h1`
+  height: 5rem;
   width: auto;
 `;
 
 function Logo() {
   return (
     <StyledLogo>
-      <Img src="/logo-light.png" alt="Logo" />
+      <H1>Logo</H1>
     </StyledLogo>
   );
 }
