@@ -1,11 +1,10 @@
 import styled from 'styled-components';
-import { useState } from 'react';
 
 import { formatCurrency } from '../../utils/helpers';
-import CreateCabinForm from './CreateCabinForm';
-import { useDeleteCabin } from './useDeleteCabin';
-import { HiPencil, HiSquare2Stack, HiTrash } from 'react-icons/hi2';
-import { useCreateCabin } from './useCreateCabin';
+import EditCabin from './EditCabin';
+import DeleteCabin from './DeleteCabin';
+import DuplicateCabin from './DuplicateCabin';
+import Row from '../../ui/Row';
 
 const TableRow = styled.div`
   display: grid;
@@ -47,63 +46,32 @@ const Discount = styled.div`
 `;
 
 function CabinRow({ cabin }) {
-  const [isShow, setIsShow] = useState(false);
-  const { isDeleting, deleteCabin } = useDeleteCabin();
-  const { isCreating, createCabin } = useCreateCabin();
-
   const {
     name,
     maxCapacity,
     regularPrice,
     discount,
     image,
-    description,
     id: cabinId,
   } = cabin;
 
-  function handleDuplicate() {
-    createCabin({
-      name: `Copy of ${name}`,
-      maxCapacity,
-      description,
-      regularPrice,
-      discount,
-      image,
-    });
-  }
-
   return (
-    <>
-      <TableRow role="row">
-        <Img src={image} />
-        <Cabin>{name}</Cabin>
-        <div> Fits up to {maxCapacity} guests</div>
-        <Price>{formatCurrency(regularPrice)}</Price>
-        {discount ? (
-          <Discount>{formatCurrency(discount)}</Discount>
-        ) : (
-          <span>&mdash;</span>
-        )}
-        <div>
-          <button disabled={isCreating} onClick={handleDuplicate}>
-            <HiSquare2Stack />
-          </button>
-          <button
-            disabled={isDeleting}
-            onClick={() => setIsShow((show) => !show)}
-          >
-            <HiPencil />
-          </button>
-          <button
-            disabled={isDeleting}
-            onClick={() => deleteCabin({ id: cabinId, imagePath: image })}
-          >
-            <HiTrash />
-          </button>
-        </div>
-      </TableRow>
-      {isShow && <CreateCabinForm cabinToEdit={cabin} />}
-    </>
+    <TableRow role="row">
+      <Img src={image} />
+      <Cabin>{name}</Cabin>
+      <div> Fits up to {maxCapacity} guests</div>
+      <Price>{formatCurrency(regularPrice)}</Price>
+      {discount ? (
+        <Discount>{formatCurrency(discount)}</Discount>
+      ) : (
+        <span>&mdash;</span>
+      )}
+      <Row type="horizontal">
+        <DuplicateCabin cabin={cabin} />
+        <EditCabin cabin={cabin} />
+        <DeleteCabin imagePath={image} cabinId={cabinId} />
+      </Row>
+    </TableRow>
   );
 }
 
