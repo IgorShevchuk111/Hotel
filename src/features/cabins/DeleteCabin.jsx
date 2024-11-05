@@ -8,12 +8,12 @@ function DeleteCabin({ cabinId, imagePath }) {
   return (
     <div>
       <Modal>
-        <Modal.Open>
+        <Modal.Open opens="delete">
           <button>
             <HiTrash />
           </button>
         </Modal.Open>
-        <Modal.Window>
+        <Modal.Window name="delete">
           <ConfirmDelete
             resourceName="cabins"
             onConfirm={() => deleteCabin({ id: cabinId, imagePath: imagePath })}
