@@ -1,11 +1,8 @@
 import styled from 'styled-components';
 
 import { formatCurrency } from '../../utils/helpers';
-import EditCabin from './EditCabin';
-import DeleteCabin from './DeleteCabin';
-import DuplicateCabin from './DuplicateCabin';
-import Row from '../../ui/Row';
 import Table from '../../ui/Table';
+import CabinMenu from './CabinMenu';
 
 const Img = styled.img`
   display: block;
@@ -35,14 +32,7 @@ const Discount = styled.div`
 `;
 
 function CabinRow({ cabin }) {
-  const {
-    name,
-    maxCapacity,
-    regularPrice,
-    discount,
-    image,
-    id: cabinId,
-  } = cabin;
+  const { name, maxCapacity, regularPrice, discount, image } = cabin;
 
   return (
     <Table.Row>
@@ -55,11 +45,7 @@ function CabinRow({ cabin }) {
       ) : (
         <span>&mdash;</span>
       )}
-      <Row type="horizontal">
-        <DuplicateCabin cabin={cabin} />
-        <EditCabin cabin={cabin} />
-        <DeleteCabin imagePath={image} cabinId={cabinId} />
-      </Row>
+      <CabinMenu cabin={cabin} />
     </Table.Row>
   );
 }
