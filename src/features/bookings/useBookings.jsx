@@ -5,6 +5,9 @@ import { useSearchParams } from 'react-router-dom';
 export function useBookings() {
   const [searchParams] = useSearchParams();
   const filterValue = searchParams.get('status');
+  const sortByValue = searchParams.get('sortBy') || 'startDate-desc';
+  const [field, direction] = sortByValue.split('-');
+  const sortBy = { field, direction };
 
   const filter =
     !filterValue || filterValue === 'all'
@@ -20,8 +23,8 @@ export function useBookings() {
     isLoading,
     error,
   } = useQuery({
-    queryKey: ['bookings', filter],
-    queryFn: () => getBookings({ filter }),
+    queryKey: ['bookings', filter, sortBy],
+    queryFn: () => getBookings({ filter, sortBy }),
   });
 
   return { bookings, isLoading, error };

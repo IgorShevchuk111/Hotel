@@ -8,13 +8,16 @@ export async function getBookings({ filter, sortBy }) {
       'id, created_at,startDate,endDate,numNights,numGuests,status,totalPrice, cabins(name),guests(fullName,email)'
     );
 
-  if (filter) query = query[filter.method || 'eq'](filter.field, filter.value);
-
   // if (filter && Array.isArray(filter)) {
   //   filter.forEach(({ field, value, method = 'eq' }) => {
   //     query = query[method](field, value);
   //   });
   // }
+
+  if (sortBy)
+    query = query.order(sortBy.field, {
+      ascending: sortBy.direction === 'asc',
+    });
 
   const { data, error } = await query;
 
