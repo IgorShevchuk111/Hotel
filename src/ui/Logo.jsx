@@ -12,7 +12,7 @@ const H1 = styled.h1`
 function Logo() {
   return (
     <StyledLogo>
-      <H1>Logo</H1>
+      <H1>Hotel</H1>
     </StyledLogo>
   );
 }
